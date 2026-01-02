@@ -1,15 +1,16 @@
-const express=require("express");
+const express = require("express");
+const app = express();
+require("dotenv").config();
+const cookieParser = require("cookie-parser");
 
-const app=express();
+require("./config/mongoose-connect");
 
-app.get("/",(req,res)=>{
-    res.send("server is live now ");
-})
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.get("/create",(req,res)=>{
-    res.send("new user created");
-})
+app.use("/api/user", require("./routes/user-routes"));
 
-app.listen(3000,()=>{
-    console.log("server running on port 3000");
-})
+app.listen(3000, () => {
+  console.log("server running on port 3000");
+});

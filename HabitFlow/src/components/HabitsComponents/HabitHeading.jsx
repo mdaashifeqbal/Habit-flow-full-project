@@ -13,8 +13,8 @@ const HabitHeading = () => {
         lead to big changes
       </p>
       <div className="w-full flex flex-col gap-3 lg:gap-0 lg:flex-row justify-between">
-        <HabitHeadCard  title="TOTAL HABITS" count="12"  icon={Clipboard} />
-        <HabitHeadCard title="COMPLETED TODAY" count="8" icon={Check} />
+        <HabitHeadCard  title="TOTAL HABITS" count="0"  icon={Clipboard} />
+        <HabitHeadCard title="COMPLETED TODAY" count="0" icon={Check} />
       </div>
     </div>
   );
