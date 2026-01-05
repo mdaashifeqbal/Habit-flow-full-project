@@ -35,9 +35,12 @@ module.exports.userRegister = async (req, res) => {
       sameSite: "strict",
     });
 
-    res
-      .status(201)
-      .json({ message: "User registered successful", success: true });
+    res.status(201).json({
+      message: "User registered successful",
+      success: true,
+      userName: newUser.name,
+      email: newUser.email,
+    });
   } catch (err) {
     console.log("error from creating user ".err.message);
     res.status(500).json({ message: "internal server error", message: false });
@@ -45,7 +48,7 @@ module.exports.userRegister = async (req, res) => {
 };
 
 //login user
-module.exports.userLogin=async (req, res) => {
+module.exports.userLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password)
@@ -60,44 +63,40 @@ module.exports.userLogin=async (req, res) => {
         .status(404)
         .json({ message: "User not found", success: false });
 
-    const originalPassword = await bcrypt.compare(
-      password, user.password
-    );
+    const originalPassword = await bcrypt.compare(password, user.password);
 
     if (!originalPassword)
       return res
-        .status(404)
+        .status(401)
         .json({ message: "Invalid credentials", success: false });
 
     const token = generateToken(user);
-    res.cookie("user_Token", token,{
-        httpOnly:true,
-        sameSite:"strict"
+    res.cookie("user_Token", token, {
+      httpOnly: true,
+      sameSite: "strict",
     });
 
-    res
-      .status(200)
-      .json({
-        message: "Login successful",
-        success: true,
-        userName: user.name,
-        userEmail: user.email,
-      });
+    res.status(200).json({
+      message: "Login successful",
+      success: true,
+      userName: user.name,
+      userEmail: user.email,
+    });
   } catch (err) {
-    console.log("error while login to user ",err.message);
-    res.status(500).json({message:"Internal server error",success:false});
+    console.log("error while login to user ", err.message);
+    res.status(500).json({ message: "Internal server error", success: false });
   }
-}
+};
 
 //user logout
-module.exports.userLogout=(req, res) => {
+module.exports.userLogout = (req, res) => {
   res.clearCookie("user_Token", {
     httpOnly: true,
-    sameSite: "strict"
+    sameSite: "strict",
   });
 
   res.status(200).json({
     message: "Logged out successfully",
     success: true,
   });
-}
+};

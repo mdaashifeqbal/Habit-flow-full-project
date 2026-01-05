@@ -1,8 +1,29 @@
 import React from "react";
-import { Leaf, Plus } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { Leaf} from "lucide-react";
+import { NavLink,useNavigate } from "react-router-dom";
+import { useAuth } from "../../Hooks/useAuth";
+import api from "../../axios/api";
 
 const Navbar = () => {
+  const {isAuth}=useAuth()
+  const navigate=useNavigate();
+
+  const handleLogout=async()=>{
+      try{
+        const userAnswer=confirm("Are you sure want to logout ?");
+
+      if(userAnswer)
+      {
+         const response=await api.post("/user/logout");
+         navigate("/login")
+      }
+      }catch(err)
+      {
+        navigate("/login");
+      }
+  }
+
+
   const activeClass =
     "text-indigo-600 font-semibold border-b-2 border-indigo-600";
   const normalClass = "text-[#648d76]";
@@ -27,18 +48,24 @@ const Navbar = () => {
           Habits
         </NavLink>
           <NavLink
-          to="/profiles"
+          to="/profile"
           className={({isActive})=>isActive ? activeClass:normalClass}
         >
           Profile
         </NavLink>
       </div>
-      <div className="hidden lg:block">
-        <button className="px-3 py-1 bg-[#2bee7c] text-black rounded flex justify-center items-center cursor-pointer">
-          <Plus size={20} />
-          Add Habit
+
+      {
+        isAuth ? <div className="hidden lg:block">
+        <button
+        onClick={()=>{
+          handleLogout();
+        }}
+        className="px-3 py-1 bg-[#2bee7c] text-black rounded flex justify-center items-center cursor-pointer">
+          Logout
         </button>
-      </div>
+      </div> :null
+      }
     </div>
   );
 };

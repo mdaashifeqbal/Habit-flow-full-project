@@ -1,5 +1,6 @@
 import React from "react";
 import { CirclePlus } from "lucide-react";
+import {Link} from "react-router-dom"
 
 const HeroSection = () => {
   return (
@@ -22,8 +23,12 @@ const HeroSection = () => {
           <CirclePlus size={16} />
         </span>
 
-        <span>Create a Habit</span>
+       <Link to="/login" >Create a Habit</Link>  
+        
       </button>
+      <Link to="/login" className="text-lg underline text-gray-800 font-semibold">Login</Link>
+      <Link to="/signup" className="text-lg underline text-gray-800 font-semibold">Create Account</Link>
+      
     </div>
   );
 };

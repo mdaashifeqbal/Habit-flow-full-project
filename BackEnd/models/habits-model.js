@@ -18,11 +18,11 @@ const habitSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    completedDate: [
+    completedDates:[
       {
-        type: String,
-      },
-    ],
+        type:Date
+      }
+    ]
   },
   { timestamps: true }
 );

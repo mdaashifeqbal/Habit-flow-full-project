@@ -8,6 +8,7 @@ import UserProfile from "../Pages/Profiles/UserProfile";
 import CreateHabit from "../Pages/HabitInput/CreateHabit";
 import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/SignUp/SignUp";
+import ProtectedRoute from "./ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -24,12 +25,20 @@ const router = createBrowserRouter([
         element: <Habits />,
       },
       {
-        path: "/profiles",
-        element: <UserProfile />,
+        path: "/profile",
+        element: (
+          <ProtectedRoute>
+            <UserProfile />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/create-habits",
-        element: <CreateHabit />,
+        element: (
+          <ProtectedRoute>
+            <CreateHabit />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "*",
@@ -42,9 +51,9 @@ const router = createBrowserRouter([
     element: <SignUp />,
   },
   {
-    path:"/login",
-    element:<Login/>
-  }
+    path: "/login",
+    element: <Login />,
+  },
 ]);
 
 export default router;
