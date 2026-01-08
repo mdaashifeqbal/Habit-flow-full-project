@@ -1,23 +1,35 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../axios/api";
+import Spinner from "../../components/Spinner/Spinner";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setloading] = useState(false);
 
   const naviagte = useNavigate();
 
   const handleSubmit = async (e) => {
+
+
+    if(!email || !password)
+    {
+      alert("All fields required");
+      return;
+    }
+
     e.preventDefault();
     try {
+      setloading(true);
       const response = await api.post("/user/login", {
         email,
         password,
       });
 
       if (response.data.success) {
-        naviagte("/profile");
+        alert(response.data.message);
+        naviagte("/");
       }
     } catch (err) {
       if (!err.response) {
@@ -35,6 +47,8 @@ function Login() {
       if (err.response.status === 404) {
         alert(err.response.data.message);
       }
+    } finally {
+      setloading(false);
     }
   };
 
@@ -82,9 +96,10 @@ function Login() {
 
           <button
             type="submit"
-            className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 transition"
+            disabled={loading}
+            className="flex items-center justify-center gap-2 bg-blue-600 text-white px-10 py-2 rounded"
           >
-            Login
+            {loading ? <Spinner/> : "Sign In"}
           </button>
         </form>
 

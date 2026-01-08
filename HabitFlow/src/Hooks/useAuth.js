@@ -9,7 +9,7 @@ export const useAuth = () => {
     const checkAuth = async () => {
       try {
         const response = await api.post("/auth/me");
-         console.log(response)
+
         if (response.data.success) {
           setIsAuth(true);
         } else {

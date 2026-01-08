@@ -12,6 +12,7 @@ const {isLoggedIn}=require("../middlewares/isLoggedIn")
 const {
   userRegister,
   userLogin,
+  me,
   userLogout,
 } = require("../controllers/userControlls/user-auth");
 
@@ -24,6 +25,9 @@ router.post("/register", userRegister);
 
 //existing user login route
 router.post("/login", userLogin);
+
+//get user details
+router.post("/me",isLoggedIn,me);
 
 //user logout route
 router.post("/logout", userLogout);

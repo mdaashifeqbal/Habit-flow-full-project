@@ -80,6 +80,27 @@ module.exports.createHabit = async (req, res) => {
   }
 };
 
+//get all habits
+module.exports.getHabits=async (req, res) => {
+  try {
+    const habits = await Habit.find({ userId: req.user._id }).sort({
+      createdAt: -1,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message:
+        habits.length === 0 ? "No habits found" : "Habits fetched successfully",
+      habits: habits,
+    });
+  } catch (err) {
+    console.log("error while fetching habits ", err.message);
+    return res
+      .status(500)
+      .json({ success: false, message: "internal server error" });
+  }
+}
+
 //habit mark as complete
 module.exports.markAsComplete=async (req, res) => {
   try {

@@ -19,7 +19,7 @@ function SignUp() {
       });
 
       if (response.data.success) {
-        navigate("/profile");
+        navigate("/");
       }
     } catch (err) {
       if (!err.response) {

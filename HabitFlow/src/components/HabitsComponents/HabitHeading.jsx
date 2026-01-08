@@ -1,8 +1,23 @@
 import React from "react";
 import HabitHeadCard from "./HabitHeadCard";
-import { Clipboard, Check} from "lucide-react";
+import { Clipboard, Check } from "lucide-react";
 
-const HabitHeading = () => {
+const HabitHeading = ({ habits }) => {
+  const totalHabits = habits.length;
+
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+
+  const endOfToday = new Date();
+  endOfToday.setHours(23, 59, 59, 999);
+
+  const todayCompletedCount = habits.filter((habit) =>
+    habit.completedDates?.some((d) => {
+      const date = new Date(d);
+      return date >= startOfToday && date <= endOfToday;
+    })
+  ).length;
+
   return (
     <div className="flex flex-col items-center justify-center py-10">
       <h2 className="capitalize text-2xl font-bold leading-5 ">
@@ -13,8 +28,12 @@ const HabitHeading = () => {
         lead to big changes
       </p>
       <div className="w-full flex flex-col gap-3 lg:gap-0 lg:flex-row justify-between">
-        <HabitHeadCard  title="TOTAL HABITS" count="0"  icon={Clipboard} />
-        <HabitHeadCard title="COMPLETED TODAY" count="0" icon={Check} />
+        <HabitHeadCard
+          title="TOTAL HABITS"
+          count={totalHabits}
+          icon={Clipboard}
+        />
+        <HabitHeadCard title="COMPLETED TODAY" count={todayCompletedCount} icon={Check} />
       </div>
     </div>
   );

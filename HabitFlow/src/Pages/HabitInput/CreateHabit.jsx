@@ -1,4 +1,42 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../../axios/api";
+
 const CreateHabit = () => {
+  const navigate = useNavigate();
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await api.post("/habit/create-habit", {
+        title,
+        description,
+      });
+
+      if (response.data.success) {
+        alert(response.data.message);
+        navigate("/habits");
+      }
+    } catch (err) {
+      if (!err.response) {
+        alert("Internal server error try again please");
+      }
+      if (err?.response?.status === 400) {
+        alert(err.response.data.message);
+      }
+
+      if (err?.response?.status === 400) {
+        alert(err.response.data.message);
+      }
+      if (err?.response?.status === 500) {
+        alert(err.response.data.message);
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="w-full max-w-md bg-white p-6 rounded-xl shadow-md">
@@ -6,26 +44,25 @@ const CreateHabit = () => {
           Create Habit
         </h2>
 
-        <form className="space-y-5">
-          {/* Habit Image Upload */}
-          <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2">
-              Habit Image
-            </label>
-
-            <label className="flex flex-col items-center justify-center h-36 border-2 border-dashed border-indigo-500 rounded-lg cursor-pointer hover:bg-indigo-50 transition">
-              <input type="file" />
-            </label>
-          </div>
-
+        <form
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
+          className="space-y-5"
+        >
           {/* Habit Title */}
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-1">
               Habit Title
             </label>
             <input
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+              maxLength={25}
               type="text"
-              placeholder="Enter habit title"
+              placeholder="Enter habit title (max 25 chars)"
               className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
             />
           </div>
@@ -36,8 +73,13 @@ const CreateHabit = () => {
               Habit Motive
             </label>
             <input
+              value={description}
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
+              maxLength={60}
               type="text"
-              placeholder="Why do you want this habit?"
+              placeholder="Why do you want this habit?(max 60 chars)"
               className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
             />
           </div>
