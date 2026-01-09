@@ -32,7 +32,7 @@ module.exports.userRegister = async (req, res) => {
     const token = generateToken(newUser);
     res.cookie("user_Token", token, {
       httpOnly: true,
-      sameSite:"none",
+      sameSite: "none",
     });
 
     res.status(201).json({
@@ -91,9 +91,7 @@ module.exports.userLogin = async (req, res) => {
 //send user details
 module.exports.me = async (req, res) => {
   try {
-    const user = await userModel
-      .findById(req.user._id)
-      .select("name email");
+    const user = await userModel.findById(req.user._id).select("name email");
 
     if (!user) {
       return res.status(404).json({
