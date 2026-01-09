@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 
 app.use(
   cors({
-    origin: "https://habit-flow-backend-h9e3.onrender.com/api",
+    origin: "https://habit-flow-7rfz.onrender.com",
     credentials: true,
   })
 );
