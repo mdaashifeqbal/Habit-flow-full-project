@@ -11,15 +11,12 @@ function Login() {
   const naviagte = useNavigate();
 
   const handleSubmit = async (e) => {
-
-
-    if(!email || !password)
-    {
+    e.preventDefault();
+    if (!email || !password) {
       alert("All fields required");
       return;
     }
 
-    e.preventDefault();
     try {
       setloading(true);
       const response = await api.post("/user/login", {
@@ -99,7 +96,7 @@ function Login() {
             disabled={loading}
             className="flex items-center justify-center gap-2 bg-blue-600 text-white px-10 py-2 rounded"
           >
-            {loading ? <Spinner/> : "Sign In"}
+            {loading ? <Spinner /> : "Sign In"}
           </button>
         </form>
 
