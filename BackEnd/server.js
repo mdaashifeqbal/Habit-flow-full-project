@@ -10,7 +10,7 @@ app.use(cors({
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
 
-require("./config/mongoose-connect");
+require("./config/mongoose-connect.js");
 
 app.use(cookieParser());
 app.use(express.json());
