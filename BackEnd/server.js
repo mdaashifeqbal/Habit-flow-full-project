@@ -20,6 +20,8 @@ app.use("/api/user", require("./routes/user-routes"));
 app.use("/api/auth",require("./routes/protected-route"));
 app.use("/api/habit", require("./routes/habit-routes"));
 
-app.listen(3000, () => {
+const PORT=process.env.PORT || 3000
+
+app.listen(PORT, () => {
   console.log("server running on port 3000");
 });
