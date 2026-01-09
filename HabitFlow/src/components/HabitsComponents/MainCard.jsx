@@ -2,7 +2,7 @@ import React from "react";
 import { Trash2 } from "lucide-react";
 import api from "../../axios/api";
 
-const MainCard = ({ habit, id, onUpdate, onDelete }) => {
+const MainCard = ({ habit=[], id, onUpdate, onDelete }) => {
   const startOfToday = new Date();
   startOfToday.setHours(0, 0, 0, 0);
 
