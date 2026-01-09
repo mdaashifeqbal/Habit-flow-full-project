@@ -3,7 +3,7 @@ import api from "../../axios/api";
 import LoadingSpinner from "../../components/Spinner/Spinner";
 
 const UserProfile = () => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState([]);
   const [loading, setloading] = useState(true);
 
   useEffect(() => {

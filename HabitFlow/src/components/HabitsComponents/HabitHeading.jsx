@@ -2,7 +2,7 @@ import React from "react";
 import HabitHeadCard from "./HabitHeadCard";
 import { Clipboard, Check } from "lucide-react";
 
-const HabitHeading = ({ habits }) => {
+const HabitHeading = ({ habits=[] }) => {
   const totalHabits = habits.length;
 
   const startOfToday = new Date();
