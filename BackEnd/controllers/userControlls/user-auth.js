@@ -32,7 +32,7 @@ module.exports.userRegister = async (req, res) => {
     const token = generateToken(newUser);
     res.cookie("user_Token", token, {
       httpOnly: true,
-      sameSite: "strict",
+      sameSite:"none",
     });
 
     res.status(201).json({
@@ -73,7 +73,7 @@ module.exports.userLogin = async (req, res) => {
     const token = generateToken(user);
     res.cookie("user_Token", token, {
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: "none",
     });
 
     res.status(200).json({
@@ -118,7 +118,7 @@ module.exports.me = async (req, res) => {
 module.exports.userLogout = (req, res) => {
   res.clearCookie("user_Token", {
     httpOnly: true,
-    sameSite: "strict",
+    sameSite: "none",
   });
 
   res.status(200).json({
