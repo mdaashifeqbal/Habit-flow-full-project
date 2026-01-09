@@ -1,26 +1,36 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const mongoose = require("mongoose");
 
-app.use(cors({
-  origin:"http://localhost:5173",
-  credentials:true
-}))
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
 
-require("./config/mongoose-connect");
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("mongodb database connected successfully");
+  })
+  .catch((err) => {
+    console.log("error while connecting to database ", err.message);
+  });
 
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/user", require("./routes/user-routes"));
-app.use("/api/auth",require("./routes/protected-route"));
+app.use("/api/auth", require("./routes/protected-route"));
 app.use("/api/habit", require("./routes/habit-routes"));
 
-const PORT=process.env.PORT || 3000
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log("server running on port 3000");
