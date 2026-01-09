@@ -51,7 +51,7 @@ const MainCard = ({ habit=[], id, onUpdate, onDelete }) => {
       <div className="flex items-start justify-between gap-3">
         {/* TEXT */}
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-gray-800 ">wrap-break-word
+          <h3 className="font-semibold text-gray-800 ">
             {habit.title}
           </h3>
           <p className="text-sm text-gray-600 wrap-break-word">
